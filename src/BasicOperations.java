@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
 
 public class BasicOperations {
 
@@ -19,5 +21,22 @@ public class BasicOperations {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    static int getMaxSizeofSingleArray(int[][] multiArray) {
+        int maxSize = -1;
+        int newSize;
+        for (int[] array : multiArray) {
+            newSize = array.length;
+            if (newSize > maxSize) {
+                maxSize = newSize;
+            }
+        }
+        return maxSize;
+    }
+
+    static boolean checkIfStringExistsInArray(String[] array, String toFound) {
+        List<String> keyList = Arrays.asList(array);
+        return keyList.contains(toFound);
     }
 }

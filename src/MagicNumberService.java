@@ -15,6 +15,7 @@ public class MagicNumberService {
         for (String filePath : args) {
             // main loop where we are checking each file
             byte[] bytesFromFile;
+            int bytesToRead;
 
             File file = new File(filePath);
             //sanity checks
@@ -39,6 +40,22 @@ public class MagicNumberService {
                 System.out.println(filePath + " has extension " + givenFileExtension
                         + " but magic number doesn't match to it.");
             }
+            // case where extension is not txt, but it is in our DB
+            else if ((bytesToRead = HardCodedNumbers.getBytesToReadByExtension(givenFileExtension)) != -1) {
+                if ((bytesFromFile = BytesFromFile.getBytesFromFile(filePath, bytesToRead)) == null) {
+                    //error case e.printStackTrace() printed
+                    continue;
+                }
+                int[][] magicNumbers = HardCodedNumbers.getMagicNumbersByExtension(givenFileExtension);
+
+                if (checkIfReadBytesMatchHardcodedMagicNumbers(bytesFromFile, magicNumbers)) {
+                    System.out.println(filePath + " file is " + givenFileExtension + ".");
+                    continue;
+                }
+                System.out.println(filePath + " has extension "
+                        + givenFileExtension + " but magic number doesn't match to it.");
+            }
+
         }
     }
 
@@ -63,5 +80,23 @@ public class MagicNumberService {
             return false;
         }
         return true;
+    }
+
+    private static boolean checkIfReadBytesMatchHardcodedMagicNumbers(byte[] readFromFile, int[][] magicNumbers) {
+        for (int[] magicNumber : magicNumbers) {
+            int lenOfActualMagicNumber = magicNumber.length;
+            int count = 0;
+            for (int readInt : magicNumber) {
+                if (readFromFile[count] != readInt) {
+                    count++;
+                    continue;
+                }
+                count++;
+                if (count == lenOfActualMagicNumber - 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
