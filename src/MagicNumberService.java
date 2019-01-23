@@ -64,6 +64,17 @@ public class MagicNumberService {
                 continue;
             }
 
+            String[] keysByMagicNumber;
+            // case where we found extension via read bytes in our DB
+            if ((keysByMagicNumber = HardCodedNumbers.getKeysByMagicNumber(bytesFromFile)) != null) {
+                String possibleExtensions = "";
+                for (String key : keysByMagicNumber) {
+                    possibleExtensions += key + ", ";
+                }
+                System.out.println("Given file " + filePath + " has " + possibleExtensions + "format.");
+                continue;
+            }
+
         }
     }
 

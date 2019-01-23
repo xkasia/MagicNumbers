@@ -50,6 +50,35 @@ public class HardCodedNumbers {
         return maxSize;
     }
 
+    static String[] getKeysByMagicNumber(byte[] inByteArray) {
+        int[] intArr = BasicOperations.convertByteArrayToIntArray(inByteArray);
+        //intArr always will be greater or equal to every magicNumber,
+        // because we read earlier maximum amount of bytes for the longest magic number
+
+        for (String[] keySet : hardCodedMap.keySet()) {
+            int[][] magicNumbers = hardCodedMap.get(keySet);
+
+            for (int[] magicNumber : magicNumbers) {
+                for (int i = 0; i < magicNumber.length; i++) {
+                    if (magicNumber[i] == -1) {
+                        continue;
+                    }
+                    if (intArr[i] == magicNumber[i]) {
+                        if (i == magicNumber.length - 1) {
+                            // we found proper magic number
+                            return keySet;
+                        }
+                        continue;
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+
 
 
 }

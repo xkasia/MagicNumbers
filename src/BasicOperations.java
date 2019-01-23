@@ -39,4 +39,13 @@ public class BasicOperations {
         List<String> keyList = Arrays.asList(array);
         return keyList.contains(toFound);
     }
+
+    static int[] convertByteArrayToIntArray(byte[] arr) {
+        int len = arr.length;
+        int convertedBytesToInts[] = new int[len];
+        for (int i = 0; i < len; i++) {
+            convertedBytesToInts[i] = arr[i] & 0xFF;
+        }
+        return convertedBytesToInts;
+    }
 }
