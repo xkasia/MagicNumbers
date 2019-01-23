@@ -7,17 +7,16 @@ import java.nio.charset.CharsetDecoder;
 public class MagicNumberService {
 
     public static void main(String[] args) {
-
         if (args.length == 0) {
             System.out.println("Brak plików.");
             return;
         }
         for (String filePath : args) {
             // main loop where we are checking each file
-            byte[] bytesFromFile;
             int bytesToRead;
-
             File file = new File(filePath);
+            byte[] bytesFromFile;
+
             //sanity checks
             if (!file.exists() || file.isDirectory()) {
                 System.out.println("File " + filePath
@@ -74,17 +73,18 @@ public class MagicNumberService {
                 System.out.println("Given file " + filePath + " has " + possibleExtensions + "format.");
                 continue;
             }
+            // case where file is utf-8
+            if ((bytesFromFile = BytesFromFile.getAllBytesFromFile(filePath)) == null) {
+                //error case e.printStackTrace() printed
+                continue;
+            }
+            if (checkIfFileIsUTF8(bytesFromFile)) {
+                System.out.println(filePath + " file is txt (utf-8).");
+                continue;
+            }
 
-        }
-    }
-
-    private static boolean checkIfTxtExtension(String filePath) {
-        String extension;
-        extension = BasicOperations.getExtension(filePath);
-        if (extension.equals("txt")) {
-            return true;
-        } else {
-            return false;
+            System.out.println("We haven't got such magic number for file "
+                    + filePath + " in our DB, so we don't know what type of file it really is.");
         }
     }
 
@@ -99,6 +99,16 @@ public class MagicNumberService {
             return false;
         }
         return true;
+    }
+
+    private static boolean checkIfTxtExtension(String filePath) {
+        String extension;
+        extension = BasicOperations.getExtension(filePath);
+        if (extension.equals("txt")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private static boolean checkIfReadBytesMatchHardcodedMagicNumbers(byte[] readFromFile, int[][] magicNumbers) {
@@ -118,6 +128,4 @@ public class MagicNumberService {
         }
         return false;
     }
-
-
 }

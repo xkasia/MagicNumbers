@@ -36,20 +36,6 @@ public class HardCodedNumbers {
         return -1;
     }
 
-    static int getMaxLengthOfKnownMagicNumbers() {
-        int maxSize = -1;
-        int newSize;
-        for (String[] key : hardCodedMap.keySet()) {
-            for (int[] array : hardCodedMap.get(key)) {
-                newSize = array.length;
-                if (newSize > maxSize) {
-                    maxSize = newSize;
-                }
-            }
-        }
-        return maxSize;
-    }
-
     static String[] getKeysByMagicNumber(byte[] inByteArray) {
         int[] intArr = BasicOperations.convertByteArrayToIntArray(inByteArray);
         //intArr always will be greater or equal to every magicNumber,
@@ -78,7 +64,17 @@ public class HardCodedNumbers {
         return null;
     }
 
-
-
-
+    static int getMaxLengthOfKnownMagicNumbers() {
+        int maxSize = -1;
+        int newSize;
+        for (String[] key : hardCodedMap.keySet()) {
+            for (int[] array : hardCodedMap.get(key)) {
+                newSize = array.length;
+                if (newSize > maxSize) {
+                    maxSize = newSize;
+                }
+            }
+        }
+        return maxSize;
+    }
 }
