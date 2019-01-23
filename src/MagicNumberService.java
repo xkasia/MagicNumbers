@@ -56,6 +56,14 @@ public class MagicNumberService {
                         + givenFileExtension + " but magic number doesn't match to it.");
             }
 
+            // case where we haven't got such extension in our db or extension doesn't match magic number
+            // now we are checking if we have such magic number in our DB
+            int maxLengthOfKnownMagicNumbers = HardCodedNumbers.getMaxLengthOfKnownMagicNumbers();
+            if ((bytesFromFile = BytesFromFile.getBytesFromFile(filePath, maxLengthOfKnownMagicNumbers)) == null) {
+                //error case e.printStackTrace() printed
+                continue;
+            }
+
         }
     }
 
@@ -99,4 +107,6 @@ public class MagicNumberService {
         }
         return false;
     }
+
+
 }

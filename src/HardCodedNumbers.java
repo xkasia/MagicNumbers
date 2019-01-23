@@ -36,4 +36,20 @@ public class HardCodedNumbers {
         return -1;
     }
 
+    static int getMaxLengthOfKnownMagicNumbers() {
+        int maxSize = -1;
+        int newSize;
+        for (String[] key : hardCodedMap.keySet()) {
+            for (int[] array : hardCodedMap.get(key)) {
+                newSize = array.length;
+                if (newSize > maxSize) {
+                    maxSize = newSize;
+                }
+            }
+        }
+        return maxSize;
+    }
+
+
+
 }
