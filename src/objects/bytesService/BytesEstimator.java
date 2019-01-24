@@ -1,18 +1,12 @@
-import java.io.File;
+package objects.bytesService;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class BytesFromFile {
+public class BytesEstimator {
 
-    static byte[] getAllBytesFromFile(String filePath) {
-        File file = new File(filePath);
-        int len = (int) file.length();
-
-        return getBytesFromFile(filePath, len);
-    }
-
-    static byte[] getBytesFromFile(String fileName, int maxLenghMagicNumber) {
+    public static byte[] getBytesFromFile(String fileName, int maxLenghMagicNumber) {
 
         FileInputStream fileInputStream;
         try {
